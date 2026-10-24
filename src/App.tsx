@@ -944,11 +944,51 @@ function Footer() {
         </div>
 
         <div className="flex flex-col items-start justify-between gap-4 border-t border-line/60 py-7 text-sm text-faint sm:flex-row sm:items-center">
-          <p>© {new Date().getFullYear()} نورپارس. کلیهٔ حقوق محفوظ است.</p>
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
+            <p>© {new Date().getFullYear()} نورپارس. کلیهٔ حقوق محفوظ است.</p>
+            <DevCredit />
+          </div>
           <p className="text-cream-2/50">پنجره‌های مسکونی — تعویض و نصب</p>
         </div>
       </div>
     </footer>
+  );
+}
+
+/* ----------------- اعتبار طراحی و توسعه: کارن سافت ----------------- */
+
+function DevCredit() {
+  return (
+    <a
+      href="https://www.karen-soft.ir"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="kscredit"
+      aria-label="طراحی و توسعه توسط کارن سافت — karen-soft.ir"
+    >
+      <span className="kscredit-label">طراحی و توسعه توسط</span>
+      <span className="kscredit-mark" aria-hidden="true">
+        <img src="images/karensoft/mark.png" alt="" width={30} height={30} loading="lazy" />
+      </span>
+      <span className="kscredit-words">
+        <img
+          className="kscredit-wm-fa"
+          src="images/karensoft/wordmark-fa.png"
+          alt="کارن سافت"
+          width={80}
+          height={20}
+          loading="lazy"
+        />
+        <img
+          className="kscredit-wm-en"
+          src="images/karensoft/wordmark-en.png"
+          alt="KarenSoft"
+          width={85}
+          height={10}
+          loading="lazy"
+        />
+      </span>
+    </a>
   );
 }
 
