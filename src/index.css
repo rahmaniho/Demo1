@@ -1,0 +1,96 @@
+@import "tailwindcss";
+
+@theme {
+  --font-serif: "Markazi Text", "Vazirmatn", ui-serif, Georgia, serif;
+  --font-sans: "Vazirmatn", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Tahoma, sans-serif;
+
+  /* پایهٔ گرم و تیره */
+  --color-ink: #0b0a09;
+  --color-ink-2: #131210;
+  --color-ink-3: #1a1814;
+  --color-line: #2a2722;
+
+  /* پیش‌زمینهٔ کرم گرم */
+  --color-cream: #f4efe6;
+  --color-cream-2: #d8d1c4;
+  --color-muted: #9c9485;
+  --color-faint: #6f685c;
+
+  /* رنگ‌های طبیعی: سبز مریم‌گلی / سبز خزه‌ای + نور گرم */
+  --color-sage: #9bb295;
+  --color-moss: #5d7260;
+  --color-glow: #e7c79a;
+  --color-glow-2: #d9a86a;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  body {
+    background-color: var(--color-ink);
+    color: var(--color-cream);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--color-glow);
+    color: var(--color-ink);
+  }
+  h1, h2, h3, h4 {
+    font-family: var(--font-serif);
+    font-weight: 500;
+    /* توجه: letter-spacing پیوند حروف فارسی را خراب می‌کند */
+    letter-spacing: 0;
+    line-height: 1.35;
+  }
+  /* اعداد فارسی در سرتای‌پوگرافی */
+  input, textarea, select, button {
+    font-family: inherit;
+  }
+}
+
+/* دانهٔ فیلم / وینیت ملایم روی کل صفحه */
+.page-grain::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(231, 199, 154, 0.06), transparent 60%),
+    radial-gradient(120% 120% at 50% 120%, rgba(93, 114, 96, 0.08), transparent 55%);
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+.animate-float-slow { animation: float-slow 9s ease-in-out infinite; }
+
+@keyframes drift {
+  0% { transform: translateX(-6%); }
+  100% { transform: translateX(6%); }
+}
+.animate-drift { animation: drift 18s ease-in-out infinite alternate; }
+
+/* ظاهرشدن تدریجی هنگام اسکرول */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.9s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  html { scroll-behavior: auto; }
+}
