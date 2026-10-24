@@ -94,3 +94,153 @@
   .reveal { opacity: 1; transform: none; transition: none; }
   html { scroll-behavior: auto; }
 }
+
+/* ------------------------------------------------------------------ *
+ *  اعتبار «طراحی و توسعه توسط کارن سافت» — فوتر
+ *  حلقهٔ نورِ چرخان دور نشان + شاین روی متن + تپشِ درخشش وردمارک
+ * ------------------------------------------------------------------ */
+
+.kscredit {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 4px 2px;
+  border-radius: 999px;
+  text-decoration: none;
+}
+
+/* برچسب متنی با برق کشویی (روی متن) */
+.kscredit-label {
+  font-size: 12px;
+  font-weight: 500;
+  background: linear-gradient(
+    90deg,
+    var(--color-muted) 25%,
+    var(--color-cream) 50%,
+    var(--color-muted) 75%
+  );
+  background-size: 220% 100%;
+  background-position: 130% 0;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: kscredit-sheen 3.6s linear infinite;
+}
+
+/* ظرف نشان + حلقهٔ نورِ مدار چرخان دور لوگو */
+.kscredit-mark {
+  position: relative;
+  width: 30px;
+  height: 30px;
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+.kscredit-mark img {
+  position: relative;
+  z-index: 1;
+  width: 22px;
+  height: 22px;
+  display: block;
+  filter: drop-shadow(0 0 6px rgba(96, 150, 255, 0.35));
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.kscredit-mark::before,
+.kscredit-mark::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  -webkit-mask: radial-gradient(closest-side, transparent 64%, #000 70%);
+  mask: radial-gradient(closest-side, transparent 64%, #000 70%);
+}
+/* حلقهٔ اصلی — نور گرم در چرخش */
+.kscredit-mark::before {
+  background: conic-gradient(
+    from 0deg,
+    transparent 0deg,
+    transparent 60deg,
+    rgba(231, 199, 154, 0.95) 140deg,
+    transparent 210deg,
+    transparent 100%
+  );
+  animation: kscredit-orbit 3.2s linear infinite;
+}
+/* حلقهٔ ثانویه — ذرات آبی برند در چرخش معکوس */
+.kscredit-mark::after {
+  inset: -3px;
+  background: conic-gradient(
+    from 180deg,
+    transparent 0deg,
+    rgba(80, 140, 255, 0.55) 90deg,
+    transparent 160deg,
+    transparent 100%
+  );
+  -webkit-mask: radial-gradient(closest-side, transparent 58%, #000 66%);
+  mask: radial-gradient(closest-side, transparent 58%, #000 66%);
+  animation: kscredit-orbit-rev 5s linear infinite;
+}
+
+/* قفلِ وردمارک‌ها: فارسی بالا، انگلیسی زیرین (آثارت هنری اصلی برند) */
+.kscredit-words {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 2px;
+}
+.kscredit-wm-fa,
+.kscredit-wm-en {
+  display: block;
+  width: auto;
+  /* متن اصلی سرمه‌ای است؛ با روشنایی بالا روی فوتر تیره خوانا می‌شود */
+  filter: brightness(2.1) saturate(1.1);
+}
+.kscredit-wm-fa {
+  height: 20px;
+  animation: kscredit-glow 3s ease-in-out infinite;
+}
+.kscredit-wm-en {
+  height: 10px;
+  opacity: 0.9;
+  animation: kscredit-glow 3s ease-in-out 1.5s infinite;
+}
+
+/* هاور: همهٔ انیمیشن‌ها شارژ می‌شوند */
+.kscredit:hover .kscredit-mark img {
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 10px rgba(120, 170, 255, 0.75));
+}
+.kscredit:hover .kscredit-wm-fa,
+.kscredit:hover .kscredit-wm-en {
+  filter: brightness(2.7) saturate(1.2) drop-shadow(0 0 6px rgba(130, 175, 255, 0.5));
+}
+
+@keyframes kscredit-orbit {
+  to { transform: rotate(360deg); }
+}
+@keyframes kscredit-orbit-rev {
+  to { transform: rotate(-360deg); }
+}
+@keyframes kscredit-sheen {
+  0% { background-position: 130% 0; }
+  100% { background-position: -90% 0; }
+}
+@keyframes kscredit-glow {
+  0%, 100% {
+    filter: brightness(2.1) saturate(1.1) drop-shadow(0 0 3px rgba(96, 150, 255, 0.25));
+  }
+  50% {
+    filter: brightness(2.5) saturate(1.2) drop-shadow(0 0 8px rgba(110, 165, 255, 0.6));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .kscredit-mark::before,
+  .kscredit-mark::after,
+  .kscredit-label,
+  .kscredit-wm-fa,
+  .kscredit-wm-en {
+    animation: none;
+  }
+}
